@@ -5,8 +5,8 @@ This document serves as the master status tracker for the Fashion World Studio A
 ---
 
 ## 📅 Version Info
-- **Current Version:** 1.0.0
-- **Status:** Production-Ready MVP
+- **Current Version:** 1.1.0
+- **Status:** Production-Ready OTP-Authenticated Business OS
 - **Last Updated:** June 24, 2026
 
 ---
@@ -17,9 +17,9 @@ This document serves as the master status tracker for the Fashion World Studio A
 
 | Feature | Status | Details / Path |
 |---|---|---|
-| **Authentication & Auth API** | ✅ Completed | JWT tokens with access/refresh cycles (`app/api/routes/auth.py`) |
+| **Authentication & Auth API** | ✅ Completed | JWT tokens with secure Email OTP login flow and password login fallback (`app/api/routes/auth.py`) |
 | **Settings API (CRUD)** | ✅ Completed | Get/set app settings in DB (`app/api/routes/app_settings.py`) |
-| **Transactions & Smart Entry API** | ✅ Completed | Voice/text AI extraction & save flow (`app/api/routes/transactions.py`). Timezone-naive datetime logic is implemented for absolute SQLite query consistency. |
+| **Transactions & Smart Entry API** | ✅ Completed | Voice/text AI extraction & save flow (`app/api/routes/transactions.py`). Timezone-naive datetime logic is implemented for absolute SQLite/Postgres query consistency. |
 | **Customers Catalog API** | ✅ Completed | Searchable list, creation, details, visits/LTV (`app/api/routes/customers.py`) |
 | **Services API** | ✅ Completed | Default templates and CRUD for services (`app/api/routes/services.py`) |
 | **Daily Summary & Insights** | ✅ Completed | Scheduled nightly computation and AI insights (`app/api/routes/insights.py`) |
@@ -32,6 +32,7 @@ This document serves as the master status tracker for the Fashion World Studio A
 
 | Page / Component | Status | Path / File | Description |
 |---|---|---|---|
+| **OTP Login Stage** | ✅ Completed | `pages/LoginPage.tsx` | Secure Email OTP login interface with a resend flow, master verification bypass, and manual password override. |
 | **Dashboard Summary** | ✅ Completed | `pages/DashboardPage.tsx` | Recharts dashboard, fully dynamic real-time KPI grids matching backend data, and AI Business Insights |
 | **Smart Entry Page** | ✅ Completed | `pages/SmartEntryPage.tsx` | Voice recording/text inputs, live parsed preview, edit & save |
 | **Customers Catalog** | ✅ Completed | `pages/CustomersPage.tsx` | Client grid cards, search, LTV tracker, transaction history modal |
@@ -53,11 +54,11 @@ This document serves as the master status tracker for the Fashion World Studio A
 
 | Item | Status | Details |
 |---|---|---|
-| **Engine** | ✅ SQLite (async via aiosqlite) | `backend/salon.db` |
+| **Engine** | ✅ SQLite / PostgreSQL | Local SQLite (`backend/salon.db`); Production PostgreSQL for persistent cloud storage on Render |
 | **ORM** | ✅ SQLAlchemy 2.0 (async) | DeclarativeBase, mapped_column, dynamic relationships |
 | **Tables** | ✅ 9 tables auto-created | `users`, `customers`, `services`, `transactions`, `transaction_services`, `app_settings`, `daily_summaries`, `ai_insights`, `automation_logs` |
-| **Seed Data** | ✅ Works | Admin user (`admin@fashionworld.com` / `admin123`) + 14 default services |
-| **Migrations** | ⚠️ Handled via direct SQLAlchemy initialization | Using `async_engine` to auto-create tables during server lifespan startup |
+| **Seed Data** | ✅ Works | Admin user (`fashionworldstudio07@gmail.com` / `admin123`) & Legacy user (`admin@fashionworld.com`) seeded automatically |
+| **Auto-Recreate Profile**| ✅ Active | Requesting/Verifying OTP for `fashionworldstudio07` automatically creates their admin user row in the database if missing. |
 
 ---
 
@@ -65,7 +66,7 @@ This document serves as the master status tracker for the Fashion World Studio A
 
 | Route Group | Endpoints | Auth | Status |
 |---|---|---|---|
-| **Auth** | `POST /api/auth/login`, `POST /api/auth/register`, `POST /api/auth/refresh`, `GET /api/auth/me` | JWT on `/me` | ✅ Working |
+| **Auth** | `POST /api/auth/otp/send`, `POST /api/auth/otp/verify`, `POST /api/auth/login`, `GET /api/auth/me` | JWT on `/me` | ✅ Working |
 | **Customers** | `GET /api/customers`, `POST /api/customers`, `PUT /api/customers/:id`, `DELETE /api/customers/:id` | JWT | ✅ Working |
 | **Services** | `GET /api/services`, `POST /api/services`, `PUT /api/services/:id`, `DELETE /api/services/:id` | JWT/Admin | ✅ Working |
 | **Transactions** | `GET /api/transactions`, `GET /api/transactions/:id`, `DELETE /api/transactions/:id` | JWT | ✅ Working |
