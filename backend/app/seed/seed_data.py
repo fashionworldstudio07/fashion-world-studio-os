@@ -31,18 +31,30 @@ DEFAULT_SERVICES = [
 async def seed_database(db: AsyncSession):
     """Seed the database with default admin user and services."""
 
-    # Seed admin user
-    result = await db.execute(select(User).where(User.email == "admin@fashionworld.com"))
-    if not result.scalar_one_or_none():
-        admin = User(
-            email="admin@fashionworld.com",
+    # Seed admin users
+    result1 = await db.execute(select(User).where(User.email == "fashionworldstudio07@gmail.com"))
+    if not result1.scalar_one_or_none():
+        admin1 = User(
+            email="fashionworldstudio07@gmail.com",
             password_hash=hash_password("admin123"),
             full_name="Fashion World Admin",
             phone="9582480417",
             role="admin",
         )
-        db.add(admin)
-        logger.info("✅ Default admin user created (admin@fashionworld.com / admin123)")
+        db.add(admin1)
+        logger.info("✅ Default admin user created (fashionworldstudio07@gmail.com / admin123)")
+
+    result2 = await db.execute(select(User).where(User.email == "admin@fashionworld.com"))
+    if not result2.scalar_one_or_none():
+        admin2 = User(
+            email="admin@fashionworld.com",
+            password_hash=hash_password("admin123"),
+            full_name="Fashion World Legacy Admin",
+            phone="9582480417",
+            role="admin",
+        )
+        db.add(admin2)
+        logger.info("✅ Legacy admin user created (admin@fashionworld.com / admin123)")
 
     # Seed services
     for svc_data in DEFAULT_SERVICES:

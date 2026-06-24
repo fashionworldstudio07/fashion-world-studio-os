@@ -9,6 +9,8 @@ interface AuthState {
   isLoading: boolean;
   error: string | null;
   login: (email: string, password: string) => Promise<void>;
+  sendOtp: (email: string) => Promise<void>;
+  verifyOtp: (email: string, otp: string) => Promise<void>;
   logout: () => void;
   loadUser: () => void;
 }
@@ -35,6 +37,34 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
   },
 
+  sendOtp: async (email: string) => {
+    set({ isLoading: true, error: null });
+    try {
+      await api.post('/auth/otp/send', { email });
+      set({ isLoading: false });
+    } catch (err: any) {
+      const msg = err.response?.data?.detail || 'Failed to send OTP';
+      set({ error: msg, isLoading: false });
+      throw new Error(msg);
+    }
+  },
+
+  verifyOtp: async (email: string, otp: string) => {
+    set({ isLoading: true, error: null });
+    try {
+      const res = await api.post<LoginResponse>('/auth/otp/verify', { email, otp });
+      const { user, tokens } = res.data;
+      localStorage.setItem('access_token', tokens.access_token);
+      localStorage.setItem('refresh_token', tokens.refresh_token);
+      localStorage.setItem('user', JSON.stringify(user));
+      set({ user, isAuthenticated: true, isLoading: false });
+    } catch (err: any) {
+      const msg = err.response?.data?.detail || 'Invalid or expired OTP';
+      set({ error: msg, isLoading: false });
+      throw new Error(msg);
+    }
+  },
+
   logout: () => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
@@ -50,3 +80,4 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
   },
 }));
+

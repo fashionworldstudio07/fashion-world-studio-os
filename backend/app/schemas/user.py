@@ -44,3 +44,12 @@ class UserResponse(BaseModel):
 class UserWithTokens(BaseModel):
     user: UserResponse
     tokens: TokenResponse
+
+
+class OTPSendRequest(BaseModel):
+    email: str
+
+
+class OTPVerifyRequest(BaseModel):
+    email: str
+    otp: str
