@@ -40,11 +40,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4" style={{ backgroundColor: 'var(--color-bg)' }}>
+    <div className="min-h-screen flex items-center justify-center px-4" style={{ backgroundColor: 'var(--bg-primary)' }}>
       {/* Decorative gradient orbs */}
       <div className="fixed top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full opacity-10" style={{ background: 'radial-gradient(circle, var(--color-gold), transparent)' }} />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full opacity-5" style={{ background: 'radial-gradient(circle, var(--color-gold), transparent)' }} />
+        <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full opacity-10" style={{ background: 'radial-gradient(circle, var(--gold), transparent)' }} />
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full opacity-5" style={{ background: 'radial-gradient(circle, var(--gold), transparent)' }} />
       </div>
 
       <div className="w-full max-w-md animate-fade-in relative z-10">
@@ -53,33 +53,30 @@ export default function LoginPage() {
           <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center gold-gradient gold-glow">
             <Crown className="w-8 h-8 text-black" />
           </div>
-          <h1 className="text-2xl font-bold gold-text">Fashion World Studio</h1>
-          <p className="text-sm mt-1" style={{ color: 'var(--color-text-muted)' }}>AI Business Operating System</p>
+          <h1 className="text-3xl font-extrabold tracking-tight gold-text">Fashion World Studio</h1>
+          <p className="text-sm mt-1.5" style={{ color: 'var(--text-secondary)' }}>AI Business Operating System</p>
         </div>
 
-        {/* Form Box */}
-        <div
-          className="rounded-2xl p-8 gold-border transition-all duration-300"
-          style={{ backgroundColor: 'var(--color-surface)', boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}
-        >
+        {/* Form Box using consistent card & glass styling */}
+        <div className="card glass p-8 animate-scale-in">
           {step === 'email' && (
             <form onSubmit={handleSendOtp}>
-              <h2 className="text-lg font-semibold mb-2">Sign In with Email</h2>
-              <p className="text-xs mb-6" style={{ color: 'var(--color-text-muted)' }}>
+              <h2 className="section-title mb-2">Sign In with Email</h2>
+              <p className="secondary-text mb-6" style={{ color: 'var(--text-secondary)' }}>
                 Enter your email address to receive a secure login OTP code.
               </p>
 
               {error && (
-                <div className="mb-4 p-3 rounded-xl text-sm" style={{ backgroundColor: 'rgba(239,68,68,0.1)', color: 'var(--color-error)', border: '1px solid rgba(239,68,68,0.2)' }}>
+                <div className="mb-5 p-3 rounded-xl text-xs font-medium" style={{ backgroundColor: 'rgba(239,68,68,0.1)', color: 'var(--danger)', border: '1px solid rgba(239,68,68,0.2)' }}>
                   {error}
                 </div>
               )}
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--color-text-muted)' }}>Email Address / Username</label>
+                  <label className="block text-xs font-semibold mb-2 card-label" style={{ color: 'var(--text-secondary)' }}>Email Address / Username</label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: 'var(--color-text-muted)' }}>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: 'var(--text-secondary)' }}>
                       <Mail className="w-4 h-4" />
                     </span>
                     <input
@@ -89,12 +86,8 @@ export default function LoginPage() {
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="e.g. fashionworldstudio07"
                       required
-                      className="w-full pl-11 pr-4 py-3 rounded-xl text-sm outline-none transition-all focus:ring-1 focus:ring-amber-500"
-                      style={{
-                        backgroundColor: 'var(--color-surface-2)',
-                        border: '1px solid var(--color-border)',
-                        color: 'var(--color-text)',
-                      }}
+                      style={{ paddingLeft: '2.85rem' }}
+                      className="input"
                     />
                   </div>
                 </div>
@@ -104,7 +97,7 @@ export default function LoginPage() {
                 id="otp-send-submit"
                 type="submit"
                 disabled={isLoading}
-                className="w-full mt-6 py-3 rounded-xl text-sm font-semibold transition-all gold-gradient text-black hover:opacity-90 disabled:opacity-50"
+                className="btn-primary w-full mt-6"
               >
                 {isLoading ? 'Sending OTP...' : 'Send OTP'}
               </button>
@@ -113,8 +106,8 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => { setStep('password'); }}
-                  className="text-xs transition-colors hover:text-amber-500"
-                  style={{ color: 'var(--color-text-muted)' }}
+                  className="secondary-text transition-colors hover:text-amber-500 bg-transparent border-none cursor-pointer"
+                  style={{ color: 'var(--text-secondary)' }}
                 >
                   Use password login instead
                 </button>
@@ -124,32 +117,32 @@ export default function LoginPage() {
 
           {step === 'otp' && (
             <form onSubmit={handleVerifyOtp}>
-              <div className="flex items-center gap-2 mb-2">
+              <div className="flex items-center gap-3 mb-2">
                 <button
                   type="button"
                   onClick={() => setStep('email')}
-                  className="p-1 rounded-lg hover:bg-white/5"
-                  style={{ color: 'var(--color-text-muted)' }}
+                  className="p-1 rounded-lg hover:bg-white/5 border-none bg-transparent cursor-pointer"
+                  style={{ color: 'var(--text-secondary)', display: 'inline-flex', alignItems: 'center' }}
                 >
                   <ArrowLeft className="w-4 h-4" />
                 </button>
-                <h2 className="text-lg font-semibold">Enter OTP Verification</h2>
+                <h2 className="section-title">Enter OTP Verification</h2>
               </div>
-              <p className="text-xs mb-6" style={{ color: 'var(--color-text-muted)' }}>
-                We've sent a 6-digit verification code to <span className="text-white">{email.includes('@') ? email : `${email}@gmail.com`}</span>.
+              <p className="secondary-text mb-6" style={{ color: 'var(--text-secondary)' }}>
+                We've sent a 6-digit verification code to <span className="text-white font-medium">{email.includes('@') ? email : `${email}@gmail.com`}</span>.
               </p>
 
               {error && (
-                <div className="mb-4 p-3 rounded-xl text-sm" style={{ backgroundColor: 'rgba(239,68,68,0.1)', color: 'var(--color-error)', border: '1px solid rgba(239,68,68,0.2)' }}>
+                <div className="mb-5 p-3 rounded-xl text-xs font-medium" style={{ backgroundColor: 'rgba(239,68,68,0.1)', color: 'var(--danger)', border: '1px solid rgba(239,68,68,0.2)' }}>
                   {error}
                 </div>
               )}
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--color-text-muted)' }}>6-Digit Code</label>
+                  <label className="block text-xs font-semibold mb-2 card-label" style={{ color: 'var(--text-secondary)' }}>6-Digit Code</label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: 'var(--color-text-muted)' }}>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: 'var(--text-secondary)' }}>
                       <Key className="w-4 h-4" />
                     </span>
                     <input
@@ -162,12 +155,8 @@ export default function LoginPage() {
                       placeholder="Enter verification code"
                       required
                       autoFocus
-                      className="w-full pl-11 pr-4 py-3 rounded-xl text-sm tracking-[0.5em] font-mono outline-none transition-all focus:ring-1 focus:ring-amber-500"
-                      style={{
-                        backgroundColor: 'var(--color-surface-2)',
-                        border: '1px solid var(--color-border)',
-                        color: 'var(--color-text)',
-                      }}
+                      style={{ paddingLeft: '2.85rem', letterSpacing: '0.4em', fontWeight: 'bold' }}
+                      className="input"
                     />
                   </div>
                 </div>
@@ -177,45 +166,45 @@ export default function LoginPage() {
                 id="otp-verify-submit"
                 type="submit"
                 disabled={isLoading}
-                className="w-full mt-6 py-3 rounded-xl text-sm font-semibold transition-all gold-gradient text-black hover:opacity-90 disabled:opacity-50"
+                className="btn-primary w-full mt-6"
               >
                 {isLoading ? 'Verifying OTP...' : 'Verify & Log In'}
               </button>
 
-              <p className="text-center text-xs mt-4" style={{ color: 'var(--color-text-muted)' }}>
-                Can't access email? Use bypass code: <span className="text-white font-semibold">456789</span>
+              <p className="text-center secondary-text mt-5" style={{ color: 'var(--text-secondary)' }}>
+                Can't access email? Use bypass code: <span className="text-white font-bold">456789</span>
               </p>
             </form>
           )}
 
           {step === 'password' && (
             <form onSubmit={handlePasswordLogin}>
-              <div className="flex items-center gap-2 mb-2">
+              <div className="flex items-center gap-3 mb-2">
                 <button
                   type="button"
                   onClick={() => setStep('email')}
-                  className="p-1 rounded-lg hover:bg-white/5"
-                  style={{ color: 'var(--color-text-muted)' }}
+                  className="p-1 rounded-lg hover:bg-white/5 border-none bg-transparent cursor-pointer"
+                  style={{ color: 'var(--text-secondary)', display: 'inline-flex', alignItems: 'center' }}
                 >
                   <ArrowLeft className="w-4 h-4" />
                 </button>
-                <h2 className="text-lg font-semibold">Password Sign In</h2>
+                <h2 className="section-title">Password Sign In</h2>
               </div>
-              <p className="text-xs mb-6" style={{ color: 'var(--color-text-muted)' }}>
+              <p className="secondary-text mb-6" style={{ color: 'var(--text-secondary)' }}>
                 Log in using your registered admin email and password.
               </p>
 
               {error && (
-                <div className="mb-4 p-3 rounded-xl text-sm" style={{ backgroundColor: 'rgba(239,68,68,0.1)', color: 'var(--color-error)', border: '1px solid rgba(239,68,68,0.2)' }}>
+                <div className="mb-5 p-3 rounded-xl text-xs font-medium" style={{ backgroundColor: 'rgba(239,68,68,0.1)', color: 'var(--danger)', border: '1px solid rgba(239,68,68,0.2)' }}>
                   {error}
                 </div>
               )}
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--color-text-muted)' }}>Email Address</label>
+                  <label className="block text-xs font-semibold mb-2 card-label" style={{ color: 'var(--text-secondary)' }}>Email Address</label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: 'var(--color-text-muted)' }}>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: 'var(--text-secondary)' }}>
                       <Mail className="w-4 h-4" />
                     </span>
                     <input
@@ -224,20 +213,16 @@ export default function LoginPage() {
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="admin@fashionworld.com"
                       required
-                      className="w-full pl-11 pr-4 py-3 rounded-xl text-sm outline-none transition-all focus:ring-1 focus:ring-amber-500"
-                      style={{
-                        backgroundColor: 'var(--color-surface-2)',
-                        border: '1px solid var(--color-border)',
-                        color: 'var(--color-text)',
-                      }}
+                      style={{ paddingLeft: '2.85rem' }}
+                      className="input"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--color-text-muted)' }}>Password</label>
+                  <label className="block text-xs font-semibold mb-2 card-label" style={{ color: 'var(--text-secondary)' }}>Password</label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: 'var(--color-text-muted)' }}>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: 'var(--text-secondary)' }}>
                       <Lock className="w-4 h-4" />
                     </span>
                     <input
@@ -246,12 +231,8 @@ export default function LoginPage() {
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
                       required
-                      className="w-full pl-11 pr-4 py-3 rounded-xl text-sm outline-none transition-all focus:ring-1 focus:ring-amber-500"
-                      style={{
-                        backgroundColor: 'var(--color-surface-2)',
-                        border: '1px solid var(--color-border)',
-                        color: 'var(--color-text)',
-                      }}
+                      style={{ paddingLeft: '2.85rem' }}
+                      className="input"
                     />
                   </div>
                 </div>
@@ -260,7 +241,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full mt-6 py-3 rounded-xl text-sm font-semibold transition-all gold-gradient text-black hover:opacity-90 disabled:opacity-50"
+                className="btn-primary w-full mt-6"
               >
                 {isLoading ? 'Signing in...' : 'Sign In'}
               </button>
@@ -269,8 +250,8 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => { setStep('email'); }}
-                  className="text-xs transition-colors hover:text-amber-500"
-                  style={{ color: 'var(--color-text-muted)' }}
+                  className="secondary-text transition-colors hover:text-amber-500 bg-transparent border-none cursor-pointer"
+                  style={{ color: 'var(--text-secondary)' }}
                 >
                   Use secure OTP login instead
                 </button>
