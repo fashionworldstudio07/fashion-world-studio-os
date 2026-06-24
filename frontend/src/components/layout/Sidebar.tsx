@@ -64,7 +64,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             <Crown className="w-5 h-5 text-black" />
           </div>
           <div>
-            <h1 className="text-sm font-bold text-[#D4A017] tracking-wide">Fashion Boys</h1>
+            <h1 className="text-sm font-bold text-[#D4A017] tracking-wide">Fashion World</h1>
             <p className="text-[10px] uppercase font-semibold tracking-wider text-[var(--text-secondary)]">Studio OS</p>
           </div>
         </div>

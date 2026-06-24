@@ -27,7 +27,7 @@ export default function MainLayout() {
   const { user } = useAuthStore();
   const navigate = useNavigate();
 
-  const currentPage = routeNames[location.pathname] || 'Fashion Boys';
+  const currentPage = routeNames[location.pathname] || 'Fashion World Studio';
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)]">

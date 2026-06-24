@@ -97,7 +97,7 @@ async def confirm_smart_entry(
             # Update existing customer stats
             customer.total_visits += 1
             customer.lifetime_value += body.total_amount
-            customer.last_visit = datetime.now(timezone.utc)
+            customer.last_visit = datetime.now(timezone.utc).replace(tzinfo=None)
 
     # Create transaction
     transaction = Transaction(
@@ -109,7 +109,7 @@ async def confirm_smart_entry(
         input_type=body.input_type,
         ai_extracted_json=body.ai_extracted_json,
         notes=body.notes,
-        service_date=body.service_date or datetime.now(timezone.utc),
+        service_date=(body.service_date or datetime.now(timezone.utc)).replace(tzinfo=None),
     )
     db.add(transaction)
     await db.flush()

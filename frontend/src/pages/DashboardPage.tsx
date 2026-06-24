@@ -96,48 +96,60 @@ export default function DashboardPage() {
   }
 
   const kpi = data?.kpi;
+  const todayRevChange = kpi?.today_revenue_change_pct ?? 0;
+  const todayCustChange = kpi?.today_customers_change ?? 0;
+  const weekRevChange = kpi?.week_revenue_change_pct ?? 0;
+  const monthRevChange = kpi?.month_revenue_change_pct ?? 0;
+  const repeatRate = kpi?.repeat_customer_rate ?? 0;
+
   const kpiCards = [
     {
       label: "Today's Revenue",
       value: `₹${(kpi?.today_revenue || 0).toLocaleString('en-IN')}`,
       icon: IndianRupee,
-      trend: "+5.2%",
-      trendLabel: "vs yesterday"
+      trend: todayRevChange >= 0 ? `+${todayRevChange}%` : `${todayRevChange}%`,
+      trendLabel: "vs yesterday",
+      trendColor: todayRevChange > 0 ? 'var(--success)' : todayRevChange < 0 ? '#EF4444' : 'var(--text-secondary)'
     },
     {
       label: "Today's Customers",
       value: kpi?.today_customers || 0,
       icon: Users,
-      trend: "+1",
-      trendLabel: "new visit"
+      trend: todayCustChange >= 0 ? `+${todayCustChange}` : `${todayCustChange}`,
+      trendLabel: "vs yesterday",
+      trendColor: todayCustChange > 0 ? 'var(--success)' : todayCustChange < 0 ? '#EF4444' : 'var(--text-secondary)'
     },
     {
       label: "Monthly Revenue",
       value: `₹${(kpi?.month_revenue || 0).toLocaleString('en-IN')}`,
       icon: TrendingUp,
-      trend: "+12.4%",
-      trendLabel: "MoM growth"
+      trend: monthRevChange >= 0 ? `+${monthRevChange}%` : `${monthRevChange}%`,
+      trendLabel: "MoM growth",
+      trendColor: monthRevChange > 0 ? 'var(--success)' : monthRevChange < 0 ? '#EF4444' : 'var(--text-secondary)'
     },
     {
       label: "Avg Bill Value",
       value: `₹${(kpi?.avg_bill_value || 0).toLocaleString('en-IN')}`,
       icon: CreditCard,
-      trend: "₹350 avg",
-      trendLabel: "per client"
+      trend: `₹${(kpi?.avg_bill_value || 0).toLocaleString('en-IN')}`,
+      trendLabel: "avg per client",
+      trendColor: (kpi?.avg_bill_value || 0) > 0 ? 'var(--success)' : 'var(--text-secondary)'
     },
     {
       label: "Weekly Revenue",
       value: `₹${(kpi?.week_revenue || 0).toLocaleString('en-IN')}`,
       icon: CalendarDays,
-      trend: "+8.1%",
-      trendLabel: "this week"
+      trend: weekRevChange >= 0 ? `+${weekRevChange}%` : `${weekRevChange}%`,
+      trendLabel: "vs last week",
+      trendColor: weekRevChange > 0 ? 'var(--success)' : weekRevChange < 0 ? '#EF4444' : 'var(--text-secondary)'
     },
     {
       label: "Repeat Rate",
-      value: `${kpi?.repeat_customer_rate || 0}%`,
+      value: `${repeatRate}%`,
       icon: Repeat,
-      trend: "Healthy",
-      trendLabel: "retention"
+      trend: repeatRate > 50 ? "High" : repeatRate > 25 ? "Healthy" : repeatRate > 0 ? "Moderate" : "0%",
+      trendLabel: repeatRate > 0 ? "retention" : "no repeats yet",
+      trendColor: repeatRate > 25 ? 'var(--success)' : repeatRate > 0 ? '#F59E0B' : 'var(--text-secondary)'
     },
   ];
 
@@ -168,7 +180,7 @@ export default function DashboardPage() {
               </span>
             </div>
             <div className="hidden lg:block text-[11px] text-[var(--text-secondary)] mt-2 border-t border-[rgba(255,255,255,0.05)] pt-2 w-full truncate">
-              <span className="text-[var(--success)] font-semibold mr-1">{card.trend}</span>
+              <span className="font-semibold mr-1" style={{ color: card.trendColor }}>{card.trend}</span>
               <span>{card.trendLabel}</span>
             </div>
           </div>

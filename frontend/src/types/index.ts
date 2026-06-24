@@ -108,6 +108,10 @@ export interface KPISummary {
   avg_bill_value: number;
   repeat_customer_rate: number;
   total_customers: number;
+  today_revenue_change_pct?: number;
+  today_customers_change?: number;
+  week_revenue_change_pct?: number;
+  month_revenue_change_pct?: number;
 }
 
 export interface RevenueTrendItem {

@@ -13,6 +13,10 @@ class KPISummary(BaseModel):
     avg_bill_value: float = 0.0
     repeat_customer_rate: float = 0.0
     total_customers: int = 0
+    today_revenue_change_pct: float = 0.0
+    today_customers_change: int = 0
+    week_revenue_change_pct: float = 0.0
+    month_revenue_change_pct: float = 0.0
 
 
 class RevenueTrendItem(BaseModel):

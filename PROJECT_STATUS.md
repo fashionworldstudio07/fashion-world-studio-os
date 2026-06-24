@@ -7,7 +7,7 @@ This document serves as the master status tracker for the Fashion World Studio A
 ## 📅 Version Info
 - **Current Version:** 1.0.0
 - **Status:** Production-Ready MVP
-- **Last Updated:** June 23, 2026
+- **Last Updated:** June 24, 2026
 
 ---
 
@@ -19,7 +19,7 @@ This document serves as the master status tracker for the Fashion World Studio A
 |---|---|---|
 | **Authentication & Auth API** | ✅ Completed | JWT tokens with access/refresh cycles (`app/api/routes/auth.py`) |
 | **Settings API (CRUD)** | ✅ Completed | Get/set app settings in DB (`app/api/routes/app_settings.py`) |
-| **Transactions & Smart Entry API** | ✅ Completed | Voice/text AI extraction & save flow (`app/api/routes/transactions.py`) |
+| **Transactions & Smart Entry API** | ✅ Completed | Voice/text AI extraction & save flow (`app/api/routes/transactions.py`). Timezone-naive datetime logic is implemented for absolute SQLite query consistency. |
 | **Customers Catalog API** | ✅ Completed | Searchable list, creation, details, visits/LTV (`app/api/routes/customers.py`) |
 | **Services API** | ✅ Completed | Default templates and CRUD for services (`app/api/routes/services.py`) |
 | **Daily Summary & Insights** | ✅ Completed | Scheduled nightly computation and AI insights (`app/api/routes/insights.py`) |
@@ -32,7 +32,7 @@ This document serves as the master status tracker for the Fashion World Studio A
 
 | Page / Component | Status | Path / File | Description |
 |---|---|---|---|
-| **Dashboard Summary** | ✅ Completed | `pages/DashboardPage.tsx` | Recharts dashboard, KPI grids, and AI Business Insights |
+| **Dashboard Summary** | ✅ Completed | `pages/DashboardPage.tsx` | Recharts dashboard, fully dynamic real-time KPI grids matching backend data, and AI Business Insights |
 | **Smart Entry Page** | ✅ Completed | `pages/SmartEntryPage.tsx` | Voice recording/text inputs, live parsed preview, edit & save |
 | **Customers Catalog** | ✅ Completed | `pages/CustomersPage.tsx` | Client grid cards, search, LTV tracker, transaction history modal |
 | **Services Page** | ✅ Completed | `pages/ServicesPage.tsx` | Category colors, add form, active/inactive badges |
