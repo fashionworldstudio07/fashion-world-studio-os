@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Outlet, useLocation, Link, useNavigate } from 'react-router-dom';
-import { Menu, Search, Bell, LayoutDashboard, Mic, Users, Receipt, Settings } from 'lucide-react';
+import { Menu, Search, Bell, LayoutDashboard, Mic, Users, Receipt, Settings, Sun, Moon } from 'lucide-react';
 import Sidebar from './Sidebar';
 import { useAuthStore } from '../../store/authStore';
+import { useThemeStore } from '../../store/themeStore';
 
 const routeNames: Record<string, string> = {
   '/': 'Dashboard',
@@ -25,6 +26,7 @@ export default function MainLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const { user } = useAuthStore();
+  const { theme, toggleTheme } = useThemeStore();
   const navigate = useNavigate();
 
   const currentPage = routeNames[location.pathname] || 'Fashion World Studio';
@@ -67,6 +69,15 @@ export default function MainLayout() {
               />
             </div>
 
+            {/* Theme Toggle Button */}
+            <button 
+              onClick={toggleTheme}
+              className="p-2 rounded-xl hover:bg-[rgba(255,255,255,0.05)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
+              title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            >
+              {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
+
             {/* Notification Bell (Desktop only, collapsed on mobile) */}
             <button className="hidden md:block p-2 rounded-xl hover:bg-[rgba(255,255,255,0.05)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors relative cursor-pointer">
               <Bell className="w-5 h-5" />
@@ -81,7 +92,7 @@ export default function MainLayout() {
               >
                 {user?.full_name?.charAt(0) || 'A'}
               </div>
-              <span className="hidden sm:inline text-xs font-semibold text-[var(--text-primary)] max-w-24 truncate">
+              <span className="hidden sm:inline text-xs font-semibold text-[var(--text-primary)] truncate max-w-[150px]">
                 {user?.full_name?.split(' ')[0]}
               </span>
             </div>

@@ -162,26 +162,31 @@ export default function DashboardPage() {
       </div>
 
       {/* KPI Cards Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 w-full">
+      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 w-full">
         {kpiCards.map((card, i) => (
           <div
             key={i}
-            className="card flex flex-row lg:flex-col justify-between items-center lg:items-stretch h-14 lg:h-auto p-3 lg:p-5"
+            className="card flex flex-col justify-between p-5 min-h-[140px] relative overflow-hidden group hover:scale-[1.02] transition-all duration-300"
           >
-            <div className="flex lg:flex-row flex-col justify-between lg:items-start w-full">
-              <span className="text-[10px] lg:text-[11px] font-medium tracking-[0.08em] uppercase text-[#6b7280] truncate">
+            {/* Background Accent Orb */}
+            <div className="absolute -top-10 -right-10 w-24 h-24 rounded-full bg-gradient-to-br from-[#D4A017] to-transparent opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none" />
+            
+            <div className="flex justify-between items-start w-full gap-2 mb-1">
+              <span className="text-[10px] lg:text-[11px] font-bold tracking-[0.05em] uppercase text-[#8a92a6] whitespace-normal leading-tight">
                 {card.label}
               </span>
-              <card.icon className="hidden lg:block w-5 h-5 text-[#D4A017] flex-shrink-0" />
+              <card.icon className="w-4 h-4 text-[#D4A017] flex-shrink-0 mt-0.5" />
             </div>
-            <div className="mt-0 lg:mt-2">
-              <span className="text-[16px] lg:text-[28px] font-bold text-[#D4A017] leading-none">
+            
+            <div className="mt-3 mb-2">
+              <span className="text-[20px] lg:text-[26px] font-extrabold text-[#D4A017] leading-none select-all">
                 {card.value}
               </span>
             </div>
-            <div className="hidden lg:block text-[11px] text-[var(--text-secondary)] mt-2 border-t border-[rgba(255,255,255,0.05)] pt-2 w-full truncate">
-              <span className="font-semibold mr-1" style={{ color: card.trendColor }}>{card.trend}</span>
-              <span>{card.trendLabel}</span>
+            
+            <div className="text-[11px] text-[var(--text-secondary)] mt-auto border-t border-[rgba(255,255,255,0.05)] pt-2 w-full flex items-center justify-between">
+              <span className="font-bold" style={{ color: card.trendColor }}>{card.trend}</span>
+              <span className="text-[10px] font-medium opacity-80">{card.trendLabel}</span>
             </div>
           </div>
         ))}
@@ -190,7 +195,7 @@ export default function DashboardPage() {
       {/* Charts Section: Revenue Trend & Services Donut */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
         {/* Revenue Trend Area Chart */}
-        <div className="flex flex-col bg-[#1a1f2e] border border-[rgba(212,160,23,0.15)] rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
+        <div className="material-card p-6 flex flex-col">
           <div className="mb-4">
             <h3 className="text-sm font-semibold text-[var(--text-primary)]">Revenue Trend (30 Days)</h3>
             <p className="text-xs text-[var(--text-secondary)]">Daily business billing performance logs</p>
@@ -204,12 +209,12 @@ export default function DashboardPage() {
                     <stop offset="95%" stopColor={GOLD} stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-                <XAxis dataKey="date" tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 9 }} tickFormatter={(v) => v.slice(5)} />
-                <YAxis tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 9 }} tickFormatter={(v) => `₹${v >= 1000 ? `${(v/1000).toFixed(0)}k` : v}`} />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border-subtle)" />
+                <XAxis dataKey="date" tick={{ fill: 'var(--text-secondary)', fontSize: 9 }} tickFormatter={(v) => v.slice(5)} />
+                <YAxis tick={{ fill: 'var(--text-secondary)', fontSize: 9 }} tickFormatter={(v) => `₹${v >= 1000 ? `${(v/1000).toFixed(0)}k` : v}`} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#111827', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', fontSize: '11px', color: '#FFF' }}
-                  labelStyle={{ color: 'rgba(255,255,255,0.5)' }}
+                  contentStyle={{ backgroundColor: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)', borderRadius: '12px', fontSize: '11px', color: 'var(--text-primary)' }}
+                  labelStyle={{ color: 'var(--text-secondary)' }}
                   formatter={(val: any) => [`₹${(val || 0).toLocaleString('en-IN')}`, 'Revenue']}
                 />
                 <Area type="monotone" dataKey="revenue" stroke={GOLD} fill="url(#goldGrad)" strokeWidth={2.5} />
@@ -219,7 +224,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Services Donut Chart */}
-        <div className="flex flex-col bg-[#1a1f2e] border border-[rgba(212,160,23,0.15)] rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
+        <div className="material-card p-6 flex flex-col">
           <div className="mb-4">
             <h3 className="text-sm font-semibold text-[var(--text-primary)]">Services Donut</h3>
             <p className="text-xs text-[var(--text-secondary)]">Revenue contribution by salon service</p>
@@ -245,7 +250,7 @@ export default function DashboardPage() {
                         ))}
                       </Pie>
                       <Tooltip
-                        contentStyle={{ backgroundColor: '#111827', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', fontSize: '11px', color: '#FFF' }}
+                        contentStyle={{ backgroundColor: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)', borderRadius: '12px', fontSize: '11px', color: 'var(--text-primary)' }}
                         formatter={(val: any) => [`₹${(val || 0).toLocaleString('en-IN')}`, 'Revenue']}
                       />
                     </PieChart>
@@ -287,11 +292,11 @@ export default function DashboardPage() {
           {(data?.revenue_trend || []).length > 0 ? (
             <ResponsiveContainer width="99%" height="100%">
               <BarChart data={data?.revenue_trend} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border-subtle)" />
                 <XAxis dataKey="date" tick={{ fill: 'var(--text-secondary)', fontSize: 9 }} tickFormatter={(v) => v.slice(5)} />
                 <YAxis tick={{ fill: 'var(--text-secondary)', fontSize: 9 }} tickFormatter={(v) => `₹${v >= 1000 ? `${(v/1000).toFixed(0)}k` : v}`} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#111827', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', fontSize: '11px', color: '#FFF' }}
+                  contentStyle={{ backgroundColor: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)', borderRadius: '12px', fontSize: '11px', color: 'var(--text-primary)' }}
                   formatter={(val: any) => [`₹${(val || 0).toLocaleString('en-IN')}`, 'Revenue']}
                 />
                 <Bar dataKey="revenue" fill={GOLD} radius={[4, 4, 0, 0]} barSize={12}>
@@ -310,7 +315,7 @@ export default function DashboardPage() {
       {/* Bottom Grid: Payment Split | Monthly Trend | Live Client Feed */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full">
         {/* Column 1: Payment Split */}
-        <div className="flex flex-col bg-[#1a1f2e] border border-[rgba(212,160,23,0.15)] rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.3)] h-[220px]">
+        <div className="material-card p-5 flex flex-col h-[220px]">
           <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-secondary)] mb-2">Payment Split</h3>
           <div className="flex-1 flex items-center justify-between gap-4 overflow-hidden">
             <div className="w-[100px] h-[100px]">
@@ -343,7 +348,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Column 2: Monthly Trend */}
-        <div className="flex flex-col bg-[#1a1f2e] border border-[rgba(212,160,23,0.15)] rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.3)] h-[220px]">
+        <div className="material-card p-5 flex flex-col h-[220px]">
           <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-secondary)] mb-2">Monthly Trend</h3>
           <div className="flex-1 flex flex-col justify-between py-2">
             <div className="flex items-center justify-between border-b border-[rgba(255,255,255,0.05)] pb-2">
@@ -362,7 +367,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Column 3: Live Client Feed (Today) */}
-        <div className="flex flex-col bg-[#1a1f2e] border border-[rgba(212,160,23,0.15)] rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.3)] lg:h-[220px] overflow-hidden">
+        <div className="material-card p-5 flex flex-col lg:h-[220px] overflow-hidden">
           <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-secondary)] mb-2">Live Client Feed</h3>
           <div className="flex-1 overflow-y-auto space-y-2 pr-1 scrollbar-thin">
             {recentTx.length > 0 ? (

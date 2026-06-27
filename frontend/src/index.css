@@ -49,23 +49,23 @@
   --floating-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Light mode override to match dark styling (patchy look fix) */
+/* Light mode definitions (Elegant slate background with high-contrast brand gold and white panels) */
 :root.light {
-  --bg-primary:     #0a0d14;
-  --bg-card:        #111827;
-  --bg-sidebar:     #0d1117;
-  --bg-elevated:    #1a2234;
-  --border-subtle:  rgba(212, 160, 23, 0.12);
-  --border-active:  rgba(212, 160, 23, 0.4);
-  --gold:           #D4A017;
-  --gold-dim:       #a07d12;
-  --gold-glow:      rgba(212, 160, 23, 0.08);
-  --text-primary:   #f9fafb;
-  --text-secondary: #9ca3af;
-  --text-muted:     #4b5563;
-  --success:        #10b981;
-  --warning:        #f59e0b;
-  --danger:         #ef4444;
+  --bg-primary:     #f8fafc;   /* Slate 50 - clean light page background */
+  --bg-card:        #ffffff;   /* Pure white cards */
+  --bg-sidebar:     #ffffff;   /* Pure white sidebar */
+  --bg-elevated:    #f1f5f9;   /* Slate 100 - elevated elements/modals */
+  --border-subtle:  rgba(212, 160, 23, 0.08); /* Soft gold border */
+  --border-active:  rgba(212, 160, 23, 0.35);
+  --gold:           #b45309;   /* Amber 700 - darker gold/amber for high contrast on light bg */
+  --gold-dim:       #92400e;   /* Amber 800 */
+  --gold-glow:      rgba(180, 83, 9, 0.06);
+  --text-primary:   #0f172a;   /* Slate 900 - dark text */
+  --text-secondary: #475569;   /* Slate 600 - secondary text */
+  --text-muted:     #94a3b8;   /* Slate 400 - placeholder/disabled */
+  --success:        #15803d;   /* Emerald 700 - dark green */
+  --warning:        #b45309;   /* Amber 700 */
+  --danger:         #b91c1c;   /* Red 700 */
 }
 
 /* ── Global Styles ─────────────────────────────────── */
@@ -169,6 +169,19 @@ body {
   border-color: var(--border-active);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
+
+.material-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.material-card:hover {
+  border-color: var(--border-active);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
 
 .btn-primary {
   background: var(--gold);
